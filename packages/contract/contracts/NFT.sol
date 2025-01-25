@@ -96,4 +96,17 @@ contract MyNFT {
         _tokenApprovals[tokenId] = to;
         emit Approval(ownerOf(tokenId), to, tokenId);
     }
+
+    function tokensOfOwner(address owner) public view returns (uint256[] memory) {
+        require(owner != address(0), "Address zero is not a valid owner");
+        uint256[] memory ownerTokens = new uint256[](_balances[owner]);
+        uint256 counter = 0;
+        for (uint256 i = 1; i <= _tokenIds; i++) {
+            if (_owners[i] == owner) {
+                ownerTokens[counter] = i;
+                counter++;
+            }
+        }
+        return ownerTokens;
+    }
 }
